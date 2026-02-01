@@ -34,7 +34,7 @@ public class UserEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "TodoEntity")
+    @OneToMany(mappedBy = "user")
     private Set<TodoEntity> todoEntityset = new HashSet<>();
 
 

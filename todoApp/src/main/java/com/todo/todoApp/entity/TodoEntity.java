@@ -31,7 +31,7 @@ public class TodoEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity user;
 
-    @OneToMany(mappedBy = "SubTodoEntity")
+    @OneToMany(mappedBy = "todoEntity")
     private Set<SubTodoEntity> subTodos = new HashSet<>();
 
 }
