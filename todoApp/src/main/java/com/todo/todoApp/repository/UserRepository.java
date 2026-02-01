@@ -1,7 +1,11 @@
 package com.todo.todoApp.repository;
 
+import com.todo.todoApp.dto.UserSignUpDTO;
 import com.todo.todoApp.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface UserRepository extends JpaRepository<UserEntity, String> {
+    Optional<UserEntity> findByEmail(String email);
 }
