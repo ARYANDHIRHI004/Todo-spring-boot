@@ -27,6 +27,7 @@ public class SubTodoEntity {
     private LocalDateTime updatedAt;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(unique = true)
     private TodoEntity todoEntity;
 
 

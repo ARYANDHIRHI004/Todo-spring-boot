@@ -20,6 +20,17 @@ public class GlobalExceptionHandler {
         return buildResponseForApiError(apiError);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<?>> errorFound(Exception exception){
+
+        ApiError apiError = ApiError
+                .builder()
+                .message(exception.getMessage())
+                .status(HttpStatus.NOT_FOUND)
+                .build();
+        return buildResponseForApiError(apiError);
+    }
+
     public ResponseEntity<ApiResponse<?>> buildResponseForApiError(ApiError apiError){
         return new ResponseEntity<>(new ApiResponse<>(apiError), HttpStatus.NOT_FOUND);
     }

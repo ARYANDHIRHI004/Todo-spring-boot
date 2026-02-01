@@ -1,16 +1,13 @@
 package com.todo.todoApp.advice;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class ApiResponse<T> {
 
-    private HttpStatus status;
     private T data;
-    private String message;
     private ApiError apiError;
 
     public ApiResponse(T data){
