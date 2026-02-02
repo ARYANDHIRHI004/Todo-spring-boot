@@ -23,6 +23,5 @@ public class TodoService {
     public TodoDTO getTodoById(String todoId) throws Exception {
         TodoEntity todo = todoRepository.findById(todoId).orElseThrow(()-> new Exception("Todo Not found"));
         return modelMapper.map(todo, TodoDTO.class);
-
     }
 }

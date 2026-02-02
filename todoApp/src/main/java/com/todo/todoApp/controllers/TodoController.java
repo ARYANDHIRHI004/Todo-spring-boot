@@ -22,7 +22,6 @@ public class TodoController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @GetMapping("/get-todo-by-id/{todoId}")
@@ -34,5 +33,4 @@ public class TodoController {
             throw new RuntimeException(e);
         }
     }
-
 }
