@@ -9,3 +9,5 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+jwt:
+  secretKey: asgasdg4631agadf4g6d4fah31ad3fh6df4h631
