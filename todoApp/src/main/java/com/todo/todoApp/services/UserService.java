@@ -9,6 +9,8 @@ import com.todo.todoApp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,5 +29,12 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username).orElseThrow(()->new ResourceNotFoundException("User not found"));
+    }
+
+    public UserEntity getUser(){
+        Authentication authenticatedUser = SecurityContextHolder.getContext().getAuthentication();
+        assert authenticatedUser != null;
+        UserEntity userEntity = (UserEntity) authenticatedUser.getPrincipal();
+        return userRepository.findById(userEntity.getId()).orElseThrow();
     }
 }
