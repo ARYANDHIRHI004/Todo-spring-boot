@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/todos")
@@ -30,9 +32,19 @@ public class TodoController {
     }
 
     @GetMapping("/get-todo-by-id/{todoId}")
-    public ResponseEntity<ApiResponse<TodoDTO>> getTodoById(@RequestParam String todoId){
+    public ResponseEntity<ApiResponse<TodoDTO>> getTodoById(@PathVariable String todoId){
         try{
             TodoDTO todo = todoService.getTodoById(todoId);
+            return ResponseEntity.ok(new ApiResponse<>(todo));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/get-all-todos")
+    public ResponseEntity<ApiResponse<List<TodoDTO>>> getAllTodos(){
+        try{
+            List<TodoDTO> todo = todoService.getAllTodos();
             return ResponseEntity.ok(new ApiResponse<>(todo));
         } catch (Exception e) {
             throw new RuntimeException(e);
