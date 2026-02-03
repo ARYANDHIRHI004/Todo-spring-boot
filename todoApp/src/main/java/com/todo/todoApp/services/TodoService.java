@@ -20,20 +20,15 @@ import java.util.stream.Collectors;
 public class TodoService {
 
     private final TodoRepository todoRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final ModelMapper modelMapper;
 
-    public UserEntity getUser(){
-        Authentication authenticatedUser = SecurityContextHolder.getContext().getAuthentication();
-        assert authenticatedUser != null;
-        UserEntity userEntity = (UserEntity) authenticatedUser.getPrincipal();
-        return userRepository.findById(userEntity.getId()).orElseThrow();
-    }
+
 
     @Transactional
     public TodoDTO registerTodo(TodoDTO todoDTO) {
         TodoEntity todoEntity = modelMapper.map(todoDTO, TodoEntity.class);
-        UserEntity user = getUser();
+        UserEntity user = userService.getUser();
         todoEntity.setUser(user);
         TodoEntity todo =  todoRepository.save(todoEntity);
         return modelMapper.map(todo, TodoDTO.class);
@@ -45,7 +40,7 @@ public class TodoService {
     }
 
     public List<TodoDTO> getAllTodos(){
-        UserEntity user = getUser();
+        UserEntity user = userService.getUser();
         List<TodoEntity> todos =todoRepository.findAllByUserId(user.getId());
         return  todos
                 .stream()
