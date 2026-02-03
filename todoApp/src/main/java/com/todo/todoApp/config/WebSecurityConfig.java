@@ -2,6 +2,8 @@ package com.todo.todoApp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,6 +22,11 @@ public class WebSecurityConfig {
                 .sessionManagement(sessionConfig -> sessionConfig
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return httpSecurity.build();
+    }
+
+    @Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config){
+        return config.getAuthenticationManager();
     }
 
 }
