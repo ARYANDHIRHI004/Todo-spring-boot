@@ -23,18 +23,6 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
-    private final PasswordEncoder passwordEncoder;
-
-    public UserSignUpResponseDTO registerUser(UserSignUpDTO userSignUpDTO) throws Exception {
-        if(userSignUpDTO == null) throw new ResourceNotFoundException("Each field is required");
-        UserEntity userEntity = modelMapper.map(userSignUpDTO, UserEntity.class);
-        Optional<UserEntity> existedUser = userRepository.findByEmail(userSignUpDTO.getEmail());
-        if (existedUser.isPresent()) throw new Exception("User already exist");
-        userEntity.setPassword(passwordEncoder.encode(userSignUpDTO.getPassword()));
-        UserEntity user = userRepository.save(userEntity);
-        return modelMapper.map(user, UserSignUpResponseDTO.class);
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
