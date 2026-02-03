@@ -14,6 +14,11 @@ public class TodoController {
 
     private final TodoService todoService;
 
+    @GetMapping("/get-todos")
+    public ResponseEntity<ApiResponse<String>> getTodos(){
+        return ResponseEntity.ok(new ApiResponse<>("aryan"));
+    }
+
     @PostMapping("/register-todo")
     public ResponseEntity<ApiResponse<TodoDTO>> registerTodo(@RequestBody TodoDTO todoDTO){
         try {

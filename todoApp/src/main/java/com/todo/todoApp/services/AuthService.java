@@ -1,5 +1,6 @@
 package com.todo.todoApp.services;
 
+import com.todo.todoApp.dto.LoginResponseDTO;
 import com.todo.todoApp.dto.UserLoginDTO;
 import com.todo.todoApp.dto.UserSignUpDTO;
 import com.todo.todoApp.dto.UserSignUpResponseDTO;
@@ -7,7 +8,6 @@ import com.todo.todoApp.entity.UserEntity;
 import com.todo.todoApp.exceptions.ResourceNotFoundException;
 import com.todo.todoApp.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -41,16 +41,17 @@ public class AuthService {
     }
 
 
-    public UserSignUpResponseDTO loginUser(UserLoginDTO userLoginDTO, HttpServletResponse response){
+    public LoginResponseDTO loginUser(UserLoginDTO userLoginDTO, HttpServletResponse response){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginDTO.getEmail(), userLoginDTO.getPassword()));
 
         UserEntity user = (UserEntity) authentication.getPrincipal();
         assert user != null;
         String token = jwtService.generateAccessToken(user);
-        Cookie cookie = new Cookie("AccessToken", token);
-        cookie.setHttpOnly(true);
-        response.addCookie(cookie);
-        return modelMapper.map(user, UserSignUpResponseDTO.class);
+
+
+        LoginResponseDTO userDTO =  modelMapper.map(user, LoginResponseDTO.class);
+        userDTO.setToken(token);
+        return userDTO;
 
     }
 

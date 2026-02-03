@@ -2,6 +2,7 @@ package com.todo.todoApp.controllers;
 
 import com.todo.todoApp.advice.ApiError;
 import com.todo.todoApp.advice.ApiResponse;
+import com.todo.todoApp.dto.LoginResponseDTO;
 import com.todo.todoApp.dto.UserLoginDTO;
 import com.todo.todoApp.dto.UserSignUpDTO;
 import com.todo.todoApp.dto.UserSignUpResponseDTO;
@@ -35,8 +36,8 @@ public class UserController {
     }
 
     @PostMapping("/login-user")
-    public ResponseEntity<ApiResponse<UserSignUpResponseDTO>> loginUser(@RequestBody UserLoginDTO userLoginDTO, HttpServletResponse response){
-         UserSignUpResponseDTO user = authService.loginUser(userLoginDTO, response);
+    public ResponseEntity<ApiResponse<LoginResponseDTO>> loginUser(@RequestBody UserLoginDTO userLoginDTO, HttpServletResponse response){
+         LoginResponseDTO user = authService.loginUser(userLoginDTO, response);
         return ResponseEntity.ok(new ApiResponse<>(user));
     }
 }

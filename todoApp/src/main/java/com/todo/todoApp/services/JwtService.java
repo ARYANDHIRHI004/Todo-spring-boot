@@ -26,8 +26,9 @@ public class JwtService {
                 .builder()
                 .subject(user.getId())
                 .claim("email", user.getEmail())
-                .signWith(getSecretKey())
                 .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 1000 *60))
+                .signWith(getSecretKey())
                 .compact();
     }
 
@@ -38,7 +39,7 @@ public class JwtService {
                 .parseSignedClaims(token)
                 .getPayload();
 
-        return claims.getId();
+        return claims.getSubject();
     }
 
 
