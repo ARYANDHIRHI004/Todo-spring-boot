@@ -48,7 +48,11 @@ public class AuthService {
         assert user != null;
         String token = jwtService.generateAccessToken(user);
 
-
+        Cookie cookie = new Cookie("token", token);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        response.addCookie(cookie);
         LoginResponseDTO userDTO =  modelMapper.map(user, LoginResponseDTO.class);
         userDTO.setToken(token);
         return userDTO;
